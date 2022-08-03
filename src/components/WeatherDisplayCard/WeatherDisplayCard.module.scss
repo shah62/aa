@@ -1,0 +1,70 @@
+@mixin compact-card {
+	padding: var(--spacing-8);
+
+	.day-label {
+		font-size: var(--font-size-2xl);
+	}
+	.weather-content-container {
+		margin-top: var(--spacing-6);
+		gap: var(--spacing-5);
+		flex-direction: column;
+	}
+	.weather-icon {
+		font-size: var(--font-size-6xl);
+	}
+	.temperature-label {
+		font-size: var(--font-size-4xl);
+	}
+	.weather-description {
+		display: none;
+	}
+}
+
+.container {
+	display: flex;
+	width: 100%;
+	min-width: 240px;
+	min-height: 260px;
+	flex: 1;
+	justify-content: center;
+	padding: var(--spacing-20);
+	background-color: var(--blue-600);
+
+	.day-label {
+		font-weight: 300;
+		font-size: var(--font-size-4xl);
+		text-align: center;
+	}
+
+	.weather-content-container {
+		margin-top: var(--spacing-4);
+		display: flex;
+		gap: var(--spacing-8);
+		align-items: center;
+	}
+
+	.weather-icon {
+		font-size: var(--font-size-8xl);
+		color: var(--blue-800);
+	}
+
+	.temperature-label {
+		line-height: 1;
+		font-family: 'Electrolize', sans-serif;
+		font-weight: bold;
+		font-size: var(--font-size-6xl);
+	}
+
+	.weather-description {
+		font-size: var(--font-size-3xl);
+		font-weight: 300;
+	}
+
+	&-compact {
+		@include compact-card();
+	}
+
+	@media only screen and (max-width: 768px) {
+		@include compact-card();
+	}
+}
