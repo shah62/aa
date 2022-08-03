@@ -5,8 +5,8 @@ import TabRoot from '../Tabs/TabRoot/TabRoot';
 import WeatherDisplay from '../WeatherDisplay/WeatherDisplay';
 
 class WeatherDisplayTabs extends React.Component {
-	constructor(props: unknown) {
-		super(props!);
+	constructor(props: Record<string, unknown>) {
+		super(props);
 	}
 
 	render(): React.ReactNode {
