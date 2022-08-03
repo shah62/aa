@@ -1,0 +1,10 @@
+.main {
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+	flex: 1;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0px var(--spacing-5);
+	max-width: calc(var(--breakpoint-tablet) + 2 * var(--spacing-5));
+}
