@@ -1,0 +1,9 @@
+@import './reset.scss';
+@import './variables.scss';
+@import './mixin.scss';
+@import './weather-icons.min.css';
+
+body {
+	background-color: var(--blue-600);
+	font-family: 'Montserrat', sans-serif;
+}
