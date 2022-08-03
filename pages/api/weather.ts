@@ -45,13 +45,15 @@ export default async function handler(
 	const data = await fetch(URL, { method: 'GET' });
 	const result = await data.json();
 
-	/**
-	 * Caching the API response in redis as the API has a rate limit of 50queries/hour
-	 * which causes issues when testing out in quick sucession.
-	 */
-	await redis.set(cacheKey, JSON.stringify(result), {
-		ex: ONE_HOUR_IN_SECONDS
-	});
+	if (data.ok) {
+		/**
+		 * Caching the API response in redis as the API has a rate limit of 50queries/hour
+		 * which causes issues when testing out in quick sucession.
+		 */
+		await redis.set(cacheKey, JSON.stringify(result), {
+			ex: ONE_HOUR_IN_SECONDS
+		});
+	}
 
 	return res.status(200).json(result);
 }
