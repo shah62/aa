@@ -1,6 +1,5 @@
 import React from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
-import { ReactNode } from 'react';
 
 export interface TabContentProps extends Tabs.TabsContentProps {}
 
@@ -9,7 +8,7 @@ class TabContent extends React.Component<TabContentProps> {
 		super(props);
 	}
 
-	render(): ReactNode {
+	render(): React.ReactNode {
 		return <Tabs.TabsContent {...this.props} />;
 	}
 }
