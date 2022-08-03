@@ -1,0 +1,32 @@
+.trigger {
+	all: unset;
+	// padding: 0 var(--spacing-5);
+	height: var(--spacing-11);
+	font-size: var(--font-size-3xl);
+	line-height: 1;
+	font-weight: 300;
+	text-transform: uppercase;
+	user-select: none;
+	&:hover {
+		font-weight: 400;
+	}
+	&:focus {
+		outline: 2px solid var(--blue-700);
+	}
+	&[data-state='active'] {
+		color: var(--blue-700);
+		font-weight: bold;
+	}
+}
+
+.root {
+	width: 100%;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	width: 100%;
+	margin: var(--spacing-6) 0px;
+}
