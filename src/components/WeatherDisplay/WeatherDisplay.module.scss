@@ -1,0 +1,14 @@
+.container {
+	border: var(--spacing-1_5) solid white;
+	border-radius: var(--spacing-2_5);
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacing-1_5);
+	background-color: white;
+	.item {
+		flex-grow: 1;
+	}
+	.full-width-item {
+		width: 100%;
+	}
+}
