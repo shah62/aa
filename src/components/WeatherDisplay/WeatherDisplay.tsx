@@ -3,72 +3,40 @@ import WeatherDisplayCard from '../WeatherDisplayCard/WeatherDisplayCard';
 import WeatherDisplayStyles from './WeatherDisplay.module.scss';
 import { add, format } from 'date-fns';
 import clsx from 'clsx';
+import withSWRHOC, { WithUseSWRHOCProps } from '../../api/swr/withSWRHOC';
+import {
+	WeatherForeCastResponse,
+	WEATHER_API
+} from '../../api/weather/weather';
 
-interface WeatherDisplayProps {
+interface WeatherDisplayProps
+	extends WithUseSWRHOCProps<WeatherForeCastResponse, any> {
 	coords: {
 		lat: number;
 		long: number;
 	};
 }
 
-interface Data {
-	timelines: Timeline[];
-}
-
-interface Timeline {
-	timestep: string;
-	endTime: string;
-	startTime: string;
-	intervals: Interval[];
-}
-
-interface Interval {
-	startTime: string;
-	values: Values;
-}
-
-interface Values {
-	temperature: number;
-	weatherCode: number;
-}
-
-interface WeatherDisplayState {
-	isLoading: boolean;
-	isError: boolean;
-	data?: { data: Data };
-}
-
-class WeatherDisplay extends React.Component<
-	WeatherDisplayProps,
-	WeatherDisplayState
-> {
+class WeatherDisplay extends React.Component<WeatherDisplayProps> {
 	constructor(props: WeatherDisplayProps) {
 		super(props);
-		this.state = {
-			isLoading: true,
-			isError: false,
-			data: undefined
-		};
-	}
-
-	async componentDidMount() {
-		const {
-			coords: { lat, long }
-		} = this.props;
-		const startTime = new Date().toISOString();
-		const endTime = add(new Date(), { days: 4 }).toISOString();
-		const data = await fetch(
-			`/api/weather?lat=${lat}&long=${long}&startTime=${startTime}&endTime=${endTime}`
-		);
-		const res = await data.json();
-		this.setState({ isLoading: false, data: res });
 	}
 
 	render(): React.ReactNode {
-		if (typeof this.state.data !== 'undefined') {
-			return (
-				<section className={WeatherDisplayStyles.container}>
-					{this.state.data.data.timelines[0].intervals.map(
+		const { data, error } = this.props.queryData;
+
+		const errorWhileFetchingWeatherForecast = typeof error !== 'undefined';
+		const isFetchingWeatherForecast =
+			!errorWhileFetchingWeatherForecast && !data;
+
+		return (
+			<section className={WeatherDisplayStyles.container}>
+				{errorWhileFetchingWeatherForecast ? (
+					<h1>Error while fetching weather forecast</h1>
+				) : isFetchingWeatherForecast ? (
+					<h1>Fetching weather forecast...</h1>
+				) : (
+					data!.data.timelines[0].intervals.map(
 						({ startTime, values: { temperature, weatherCode } }, index) => {
 							const shouldCardBeCompact = index !== 0;
 							const shouldBeFullWidth = index === 0;
@@ -92,13 +60,21 @@ class WeatherDisplay extends React.Component<
 								</div>
 							);
 						}
-					)}
-				</section>
-			);
-		}
+					)
+				)}
+			</section>
+		);
 
 		return null;
 	}
 }
 
-export default WeatherDisplay;
+export default withSWRHOC<
+	WeatherForeCastResponse,
+	unknown,
+	WeatherDisplayProps
+>(({ coords: { lat, long } }) => ({
+	key: WEATHER_API.FORECAST.key(lat, long),
+	queryFn: () => WEATHER_API.FORECAST.queryFunction(lat, long),
+	options: {}
+}))(WeatherDisplay);
