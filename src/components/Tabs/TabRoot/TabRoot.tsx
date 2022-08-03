@@ -13,7 +13,7 @@ export interface TabRootProps {
 	tabsRootProps?: Tabs.TabsProps;
 	tabsListProps?: Tabs.TabsListProps;
 	tabTriggers: TabTrigger[];
-	children: React.ReactNode | ((tabTriggers: TabTrigger) => React.ReactNode);
+	children: React.ReactNode;
 }
 
 class TabRoot extends React.Component<TabRootProps> {
@@ -54,11 +54,7 @@ class TabRoot extends React.Component<TabRootProps> {
 						);
 					})}
 				</Tabs.List>
-				{typeof this.props.children === 'function'
-					? this.props.tabTriggers.map((tabTrigger) =>
-							(this.props.children as any)(tabTrigger)
-					  )
-					: this.props.children}
+				{this.props.children}
 			</Tabs.Root>
 		);
 	}
