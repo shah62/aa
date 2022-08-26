@@ -3,6 +3,10 @@ interface WeatherCodeDescriptor {
 	weatherIconClassName: string;
 }
 
+/**
+ * A map of weather code and their respective icons and name based off 
+ * the tomorrow.io API documentation found here: https://docs.tomorrow.io/reference/data-layers-weather-codes.
+ */
 export const weatherCodeMap: Record<number, WeatherCodeDescriptor> = {
 	0: { name: 'Unknown', weatherIconClassName: 'wi-day-sunny' },
 	1000: { name: 'Clear, Sunny', weatherIconClassName: 'wi-day-sunny' },

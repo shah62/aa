@@ -47,7 +47,7 @@ export default async function handler(
 
 	if (data.ok) {
 		/**
-		 * Caching the API response in redis as the API has a rate limit of 50queries/hour
+		 * Caching the API response in redis as the API has a rate limit of 25 queries/hour
 		 * which causes issues when testing out in quick sucession.
 		 */
 		await redis.set(cacheKey, JSON.stringify(result), {
